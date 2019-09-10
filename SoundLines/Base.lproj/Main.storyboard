@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ey2-Lz-gcD">
+    <device id="retina4_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="OldSansBlack.ttf">
+            <string>OldSansBlack</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="fuZ-4c-RBk">
+            <objects>
+                <navigationController id="ey2-Lz-gcD" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wQM-5u-tHl">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="hEM-e7-KQl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rfh-Mn-aQg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-976" y="-370"/>
+        </scene>
+        <!--Open Screen-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="OpenScreen" customModule="SoundLines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbW-8i-4HC">
+                                <rect key="frame" x="233" y="275" width="201" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="30"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="60"/>
+                                </variation>
+                                <connections>
+                                    <segue destination="BeI-sM-HcF" kind="show" id="3FC-VO-rcK"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SOUNDLINES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTg-g5-sJR">
+                                <rect key="frame" x="181" y="53" width="305" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="openScreenLabel" label="SOUNDLINES">
+                                    <accessibilityTraits key="traits" staticText="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="50"/>
+                                <color key="textColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="100"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HSb-K1-Oj8">
+                                <rect key="frame" x="58" y="143" width="550" height="88"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" hint="openScreenExplanationLabel" identifier="openScreenExplanationLabel">
+                                    <string key="label">Help a kitten play with its cat friend: you just need to connect them with a line! Ready? Press the play button to start the game.</string>
+                                    <accessibilityTraits key="traits" staticText="YES"/>
+                                </accessibility>
+                                <string key="text">Help a kitten play with its cat friend: you just need to connect them with a line! Ready? Press the play button to start the game.</string>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="40"/>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="rDh-WF-J5g"/>
+                    <connections>
+                        <outlet property="screenButton" destination="VbW-8i-4HC" id="Ndc-So-i4W"/>
+                        <outlet property="screenText" destination="HSb-K1-Oj8" id="nsA-nJ-xeQ"/>
+                        <outlet property="screenTitle" destination="DTg-g5-sJR" id="Q1x-aZ-fwk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-93.103448275862078" y="-370.39999999999998"/>
+        </scene>
+        <!--Level1 Screen-->
+        <scene sceneID="y2R-ve-jEQ">
+            <objects>
+                <viewController id="BeI-sM-HcF" customClass="Level1Screen" customModule="SoundLines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vdp-TD-I80">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9s-aJ-48z">
+                                <rect key="frame" x="233" y="275" width="201" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="30"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="60"/>
+                                </variation>
+                                <connections>
+                                    <segue destination="U9f-C4-f8l" kind="show" id="KyA-Ax-uu6"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0I-ja-Lk2">
+                                <rect key="frame" x="58" y="143" width="550" height="88"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" hint="LevelOneExplanationLabel" identifier="LevelOneExplanationLabel">
+                                    <string key="label">First, find the cat and the kitten. Then connect the kitten to the cat following the horizontal line. The sound will help you to know if it's the right path. Press play to continue.</string>
+                                    <accessibilityTraits key="traits" staticText="YES"/>
+                                </accessibility>
+                                <string key="text">First, find the cat and the kitten. Then connect the kitten to the cat following the horizontal line. The sound will help you to know if it's the right path. Press play to continue.</string>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="40"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Level 1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yxl-r7-uYF">
+                                <rect key="frame" x="253" y="53" width="160" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="levelOneScreenLabel" label="Level One">
+                                    <accessibilityTraits key="traits" staticText="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="50"/>
+                                <color key="textColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="100"/>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="egO-ch-s2y"/>
+                    </view>
+                    <connections>
+                        <outlet property="screenButton" destination="w9s-aJ-48z" id="Ycu-n5-qfs"/>
+                        <outlet property="screenText" destination="J0I-ja-Lk2" id="YGh-Wz-OA3"/>
+                        <outlet property="screenTitle" destination="yxl-r7-uYF" id="mB2-mY-f59"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KK5-RB-kmn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-93.103448275862078" y="400.80000000000001"/>
+        </scene>
+        <!--Level1-->
+        <scene sceneID="VQs-45-8FR">
+            <objects>
+                <viewController id="U9f-C4-f8l" customClass="Level1" customModule="SoundLines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BWL-VK-V8C">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cat-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="rM0-B7-cqy">
+                                <rect key="frame" x="557" y="150" width="75" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="horizontal-red-line" translatesAutoresizingMaskIntoConstraints="NO" id="xnv-tP-sr0">
+                                <rect key="frame" x="114" y="150" width="438" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="kitten-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="3qd-aL-Oay">
+                                <rect key="frame" x="20" y="150" width="75" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" allowsDirectInteraction="YES"/>
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
+                        <viewLayoutGuide key="safeArea" id="Eju-E0-VC0"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="aaf-I2-V94" appends="YES" id="QeT-q9-IYa"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="cat" destination="rM0-B7-cqy" id="bah-6g-h7M"/>
+                        <outlet property="kitten" destination="3qd-aL-Oay" id="Hgf-or-kFX"/>
+                        <outlet property="redLine" destination="xnv-tP-sr0" id="g0q-T3-7ne"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sI0-CR-DAL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="aaf-I2-V94">
+                    <connections>
+                        <action selector="panDetector:" destination="U9f-C4-f8l" id="zGv-wQ-Pd6"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-93.103448275862078" y="1189.5999999999999"/>
+        </scene>
+        <!--Level2 Screen-->
+        <scene sceneID="Jec-ma-Riu">
+            <objects>
+                <viewController storyboardIdentifier="Level2Screen" id="UOM-CP-eIa" customClass="Level2Screen" customModule="SoundLines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ocS-6Q-WtW">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qio-im-CdI">
+                                <rect key="frame" x="20" y="142" width="627" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" hint="LevelTwoExplanationLabel" identifier="LevelTwoExplanationLabel">
+                                    <string key="label">The line is now vertical. Just like before, find the cat and the kitten and connect them following the line. Press play to continue.</string>
+                                    <accessibilityTraits key="traits" selected="YES" staticText="YES"/>
+                                </accessibility>
+                                <string key="text">The line is now vertical. Just like before, find the cat and the kitten and connect them following the line. Press play to continue.</string>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="40"/>
+                                </variation>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljd-Y2-caC">
+                                <rect key="frame" x="233.5" y="275" width="200" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="30"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kSh-K8-R0n" kind="show" id="23d-yW-s4b"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Level 2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HRf-0G-G8L">
+                                <rect key="frame" x="253.5" y="20" width="160" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="Level Two">
+                                    <accessibilityTraits key="traits" selected="YES" staticText="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="50"/>
+                                <color key="textColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="100"/>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="G1u-Qs-sR6"/>
+                    </view>
+                    <connections>
+                        <outlet property="screenButton" destination="ljd-Y2-caC" id="XKh-8I-j59"/>
+                        <outlet property="screenText" destination="qio-im-CdI" id="vxb-LV-dYd"/>
+                        <outlet property="screenTitle" destination="HRf-0G-G8L" id="hMh-aY-k5K"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hV9-PR-OlV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-94.002998500749626" y="1976.8"/>
+        </scene>
+        <!--Level2-->
+        <scene sceneID="bAS-Ep-9ff">
+            <objects>
+                <viewController id="kSh-K8-R0n" customClass="Level2" customModule="SoundLines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Doe-Qo-ApV">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="kitten-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="fpf-2S-1px">
+                                <rect key="frame" x="296" y="20" width="75" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="horizontal-red-line" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-5i-scY">
+                                <rect key="frame" x="296" y="103" width="75" height="169"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cat-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="bdt-fF-agr">
+                                <rect key="frame" x="296" y="280" width="75" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" allowsDirectInteraction="YES"/>
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
+                        <gestureRecognizers/>
+                        <viewLayoutGuide key="safeArea" id="fhO-OE-7E2"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="YNS-bF-y77" appends="YES" id="AAG-Hl-9pd"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="cat" destination="bdt-fF-agr" id="m77-GX-YxV"/>
+                        <outlet property="kitten" destination="fpf-2S-1px" id="36o-Ma-pVn"/>
+                        <outlet property="redLine" destination="V5B-5i-scY" id="eON-jy-ejt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gz4-A8-NUk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="YNS-bF-y77">
+                    <connections>
+                        <action selector="panDetector:" destination="kSh-K8-R0n" id="Rkd-UP-8Ji"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-93.103448275862078" y="2773.5999999999999"/>
+        </scene>
+        <!--Level3 Screen-->
+        <scene sceneID="OUd-uY-TOo">
+            <objects>
+                <viewController storyboardIdentifier="Level3Screen" id="fV3-as-FiO" customClass="Level3Screen" customModule="SoundLines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IJu-ni-P98">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YhR-3A-8at">
+                                <rect key="frame" x="233" y="275" width="200" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="30"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="hWi-WS-TWz" kind="show" id="AbA-nx-apm"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="The line is now diagonal. Press play to continue." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBQ-3l-ldz">
+                                <rect key="frame" x="20" y="172" width="627" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" hint="LevelThreeExplanationLabel" identifier="LevelThreeExplanationLabel" label="The line is now diagonal. Press play to continue.">
+                                    <accessibilityTraits key="traits" selected="YES" staticText="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="40"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Level 3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lB-Rm-rlR">
+                                <rect key="frame" x="20" y="20" width="627" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="Level Three">
+                                    <accessibilityTraits key="traits" selected="YES" staticText="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="50"/>
+                                <color key="textColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="100"/>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="eI9-Bq-Lvc"/>
+                    </view>
+                    <connections>
+                        <outlet property="screenButton" destination="YhR-3A-8at" id="g7M-vT-eSz"/>
+                        <outlet property="screenText" destination="bBQ-3l-ldz" id="YE7-VZ-bre"/>
+                        <outlet property="screenTitle" destination="5lB-Rm-rlR" id="bGw-8g-Mcy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cRp-qT-1ee" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-94.002998500749626" y="3568.8000000000002"/>
+        </scene>
+        <!--Level3-->
+        <scene sceneID="Hc7-U4-z3P">
+            <objects>
+                <viewController id="hWi-WS-TWz" customClass="Level3" customModule="SoundLines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6wg-eD-sPE">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="kitten-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="a4p-Np-EnB">
+                                <rect key="frame" x="20" y="20" width="75" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cat-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="1hc-fp-7cc">
+                                <rect key="frame" x="557" y="280" width="75" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="horizontal-red-line" translatesAutoresizingMaskIntoConstraints="NO" id="OUK-tH-EP6">
+                                <rect key="frame" x="58" y="150" width="550" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" allowsDirectInteraction="YES"/>
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
+                        <gestureRecognizers/>
+                        <viewLayoutGuide key="safeArea" id="HYr-uc-fwq"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="nw5-RO-pPg" appends="YES" id="U15-6t-axI"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="cat" destination="1hc-fp-7cc" id="Fua-wR-mhN"/>
+                        <outlet property="kitten" destination="a4p-Np-EnB" id="Vt2-dI-NOH"/>
+                        <outlet property="redLine" destination="OUK-tH-EP6" id="pfb-6x-j1Q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bsm-9U-LAl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="nw5-RO-pPg">
+                    <connections>
+                        <action selector="panDetector:" destination="hWi-WS-TWz" id="Nl9-7Q-YDD"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-93" y="4478"/>
+        </scene>
+        <!--FinalScreen-->
+        <scene sceneID="yNF-uZ-N1e">
+            <objects>
+                <viewController storyboardIdentifier="FinalScreen" title="FinalScreen" id="b23-zj-iEi" customClass="FinalScreen" customModule="SoundLines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="k5H-ub-1cV">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Congratulations!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sW-4u-iCF">
+                                <rect key="frame" x="156.5" y="20" width="356" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="Congratulations!">
+                                    <accessibilityTraits key="traits" selected="YES" staticText="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="50"/>
+                                <color key="textColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="100"/>
+                                </variation>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pld-Yg-bif">
+                                <rect key="frame" x="234" y="275" width="200" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="30"/>
+                                <state key="normal" title="RESTART">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BeI-sM-HcF" kind="show" id="K2l-RS-Ux1"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You completed all the levels! Now kitten and cat can play together. If you want to restart the game press the restart button." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="njh-ih-6UL">
+                                <rect key="frame" x="20" y="142" width="627" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" hint="finalScreenExplanationLabel" identifier="openScreenLabel" label="You completed all the levels! Now kitten and cat can play together. If you want to restart the game press the restart button.">
+                                    <accessibilityTraits key="traits" selected="YES" staticText="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="40"/>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="gzC-le-Xfa"/>
+                    </view>
+                    <connections>
+                        <outlet property="screenButton" destination="pld-Yg-bif" id="Kck-Ng-vAl"/>
+                        <outlet property="screenText" destination="njh-ih-6UL" id="fCT-QL-4lZ"/>
+                        <outlet property="screenTitle" destination="3sW-4u-iCF" id="8ys-zH-IOz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jcJ-Y9-mtQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-94.002998500749626" y="5264.8000000000002"/>
+        </scene>
+        <!--Open Screen-->
+        <scene sceneID="XbH-7Z-cJl">
+            <objects>
+                <viewController id="d23-7E-EHJ" customClass="OpenScreen" customModule="SoundLines" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KIO-gM-no0" customClass="ViewController">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V5V-nE-sHF">
+                                <rect key="frame" x="233" y="275" width="200" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="30"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11a-Zv-rGD">
+                                <rect key="frame" x="20" y="142" width="627" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" hint="openScreenLabel" identifier="openScreenLabel" label="SoundLines: help a kitten play with its cat friend!  Press play to continue.">
+                                    <accessibilityTraits key="traits" selected="YES" staticText="YES"/>
+                                </accessibility>
+                                <string key="text">Help a kitten play with its cat friend: you just need to connect them with a line! Ready? Press the play button to start the game.</string>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SOUNDLINES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDj-2h-IxG">
+                                <rect key="frame" x="20" y="20" width="627" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" hint="openScreenLabel" identifier="openScreenLabel" label="SoundLines: help a kitten play with its cat friend!  Press play to continue.">
+                                    <accessibilityTraits key="traits" selected="YES" staticText="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="OldSansBlack" family="OldSansBlack" pointSize="52"/>
+                                <color key="textColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="lcb-Y4-w28"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="YNT-PO-54g"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Caz-21-jd7" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-93.103448275862078" y="-370.39999999999998"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cat-icon.png" width="200" height="200"/>
+        <image name="horizontal-red-line" width="438" height="75"/>
+        <image name="kitten-icon.png" width="200" height="200"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="3FC-VO-rcK"/>
+    </inferredMetricsTieBreakers>
+</document>
