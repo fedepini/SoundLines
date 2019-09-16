@@ -21,8 +21,8 @@ class Level3: UIViewController {
     var panner = AKPanner()
     var mixerCat = AKMixer()
     
-    var catSound: AVAudioPlayer?
-    var kittenSound: AVAudioPlayer?
+    var catSound: AKAudioPlayer!
+    var kittenSound: AKAudioPlayer!
     
     var diagonalAngle = Double()
     
@@ -34,7 +34,13 @@ class Level3: UIViewController {
         
         // Creates AudioKit mixer and panner
         
-        let mixer = AKMixer(oscillator,oscillator2)
+        let catFile = try! AKAudioFile(readFileName: "cat.wav")
+        let kittenFile = try! AKAudioFile(readFileName: "kitten.wav")
+        
+        catSound = try! AKAudioPlayer(file: catFile)
+        kittenSound = try! AKAudioPlayer(file: kittenFile)
+        
+        let mixer = AKMixer(oscillator, oscillator2, catSound, kittenSound)
         
         panner = AKPanner(mixer, pan: 0.0)
         
@@ -148,11 +154,6 @@ class Level3: UIViewController {
     
     @IBAction func panDetector(_ gestureRecognizer: UIPanGestureRecognizer) {
         
-        let catSoundPath = Bundle.main.path(forResource: "cat.wav", ofType:nil)!
-        let catSoundUrl = URL(fileURLWithPath: catSoundPath)
-        let kittenSoundPath = Bundle.main.path(forResource: "kitten.wav", ofType:nil)!
-        let kittenSoundUrl = URL(fileURLWithPath: kittenSoundPath)
-        
         print("panDetector")
         
         // Saves the point touched by the user
@@ -173,13 +174,17 @@ class Level3: UIViewController {
                 
                 print("cat: first tap")
                 
-                // Show the kitten
+                if catFound == 0 {
+                    UIAccessibility.post(notification: .announcement, argument: "You found the cat! Find the kitten")
+                }
                 
                 catFound = catFound + 1
+                
+                catSound.start()
+                
+                // Show the kitten
                 catShown = true
                 kitten.isHidden = false
-            } else {
-                catFound = 0
             }
             
             if catShown == true {
@@ -191,7 +196,13 @@ class Level3: UIViewController {
                     
                     print("kitten: tap")
                     
+                    if kittenFound == 0 {
+                        UIAccessibility.post(notification: .announcement, argument: "You found the kitten! Follow the line to connect the kitten to the cat")
+                    }
+                    
                     kittenFound = kittenFound + 1
+                    
+                    kittenSound.start()
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
                         
@@ -201,8 +212,6 @@ class Level3: UIViewController {
                         
                         self.gameStarted = true
                     })
-                } else {
-                    kittenFound = 0
                 }
             }
         }
@@ -215,7 +224,6 @@ class Level3: UIViewController {
                 
                 startedFromKitten = true
                 
-                UIAccessibility.post(notification: .announcement, argument: "Kitten")
             }
             
             if gestureRecognizer.state == .changed {
@@ -244,10 +252,10 @@ class Level3: UIViewController {
                     
                     if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
                         oscillator.stop()
-                        UIAccessibility.post(notification: .announcement, argument: "Kitten")
+                        kittenSound.start()
                     } else if Utility.isInsideCat(cat: cat, point: initialPoint) {
                         oscillator.stop()
-                        UIAccessibility.post(notification: .announcement, argument: "Cat")
+                        catSound.start()
                     }
                     
                     // 2. At the center of the line
@@ -262,21 +270,21 @@ class Level3: UIViewController {
                     }
                     
                     if Utility.isInsideCat(cat: cat, point: initialPoint) {
-                        print("Last point is inside element")
                         
                         if startedFromKitten {
+                            print("Last point is inside element")
                             oscillator.stop()
                             oscillator2.stop()
                             
                             gameStarted = false
                             
                             levelComplete = true
+                            
+                        } else {
+                            print("Last point is outside element")
+                            print("restart game")
+                            UIAccessibility.post(notification: .announcement, argument: "Go back to the kitten and follow the line")
                         }
-                        
-                    } else if !Utility.isInsideKitten(kitten: kitten, point: initialPoint) || startedFromKitten == false {
-                        print("Last point is outside element")
-                        print("restart game")
-                        UIAccessibility.post(notification: .announcement, argument: "Go back and follow the line")
                     }
                     
                 } else {
@@ -294,7 +302,6 @@ class Level3: UIViewController {
                     startedFromKitten = false
                     
                     print("restart game")
-                    UIAccessibility.post(notification: .announcement, argument: "Go back and follow the line")
                 }
             }
             
@@ -303,7 +310,7 @@ class Level3: UIViewController {
                 oscillator2.stop()
                 print("Pan released")
                 print("restart game")
-                UIAccessibility.post(notification: .announcement, argument: "Go back and follow the line")
+                UIAccessibility.post(notification: .announcement, argument: "Touch released, go back to the kitten and follow the line")
                 startedFromKitten = false
                 levelCompleteCounter = 0
             }
@@ -315,12 +322,7 @@ class Level3: UIViewController {
             
             UIAccessibility.post(notification: .announcement, argument: "Well done! Level 3 completed")
             
-            do {
-                self.catSound = try AVAudioPlayer(contentsOf: catSoundUrl)
-                self.catSound?.play()
-            } catch {
-                // couldn't load file :(
-            }
+            catSound.start()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
                 try! AudioKit.stop()
@@ -330,30 +332,6 @@ class Level3: UIViewController {
                 self.present(finalScreen, animated: true, completion: nil)
                 
             })
-        }
-        
-        if catFound == 1 {
-            
-            do {
-                self.catSound = try AVAudioPlayer(contentsOf: catSoundUrl)
-                self.catSound?.play()
-            } catch {
-                // couldn't load file :(
-            }
-            
-            UIAccessibility.post(notification: .announcement, argument: "You found the cat! Find the kitten")
-        }
-        
-        if kittenFound == 1 {
-            
-            do {
-                kittenSound = try AVAudioPlayer(contentsOf: kittenSoundUrl)
-                kittenSound?.play()
-            } catch {
-                // couldn't load file :(
-            }
-            
-            UIAccessibility.post(notification: .announcement, argument: "You found the kitten! Follow the line to connect the kitten to the cat")
         }
     }
 
