@@ -64,10 +64,6 @@ class Level2: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Game logic: find the cat, find the kitten
-        // When both are found create the line
-        // If the kitten has been reached, go to the next level
-        
         // Tell the user to find the cat
         
         if gameStarted == false {
@@ -77,9 +73,9 @@ class Level2: UIViewController {
         }
     }
     
-    // Sets the line location and dimension:
-    // it is located between the cat and the kitten
-    // it has the same heigth as the element
+    // Game logic: find the cat, find the kitten
+    // When both are found show the line
+    // If the cat has been reached, go to the next level
     
     // Detects panning on the shape and adds sonification based on the finger position
     
@@ -259,9 +255,13 @@ class Level2: UIViewController {
         }
     }
     
+    // FUNCTIONS
+    
     // Inizialization of AudioKit elements: cat and kitten sounds, oscillators
     
     func setAudioKitElements() -> Void {
+        
+        print("setAudioKitElements")
         
         // Creates AudioKit mixer and panner: adds cat and kitten sound
         
@@ -287,6 +287,9 @@ class Level2: UIViewController {
     // Sets positions and dimensions of view elements
     
     func setViewElements() -> Void {
+        
+        print("setViewElements")
+
         // Sets the width of the line image: 50% of screen height
         
         let frameHeight = view.frame.size.height * 0.5
@@ -321,6 +324,9 @@ class Level2: UIViewController {
     // Creates a virtual line based on an equation: returns distance from given point
 
     func distPointLine(point: CGPoint) -> Double {
+        
+        print("distPointLine")
+
         let a = Double(1)
         let b = Double(0)
         let c = Double(self.view.frame.size.width / 2)
@@ -333,6 +339,9 @@ class Level2: UIViewController {
     // Returns true if the given point is between the cat and kitten image
     
     func isBetweenCats(cat: UIImageView, kitten: UIImageView, point: CGPoint) -> Bool {
+        
+        print("isBetweenCats")
+
         let kittenMinY = kitten.frame.minY
         let catMaxY = cat.frame.maxY
         

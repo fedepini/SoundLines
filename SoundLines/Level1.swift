@@ -64,10 +64,6 @@ class Level1: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Game logic: find the cat, find the kitten
-        // When both are found create the line
-        // If the kitten has been reached, go to the next level
-        
         // Tell the user to find the cat
         
         if gameStarted == false {
@@ -77,9 +73,10 @@ class Level1: UIViewController {
         }
     }
     
-    // Sets the line location and dimension:
-    // it is located between the cat and the kitten
-    // it has the same heigth as the element
+    // The game is divided in 3 steps:
+    // 1. The user finds elements: Find the cat -> Find the kitten -> Show the line -> Start game
+    // 2. The user connects the kitten to the cat: Start from the kitten -> Follow the line -> Go to the          cat -> Level complete
+    // 3. Level complete: redirect to the next screen
     
     // Detects panning on the shape and adds sonification based on the finger position
     
@@ -93,59 +90,32 @@ class Level1: UIViewController {
         
         guard gestureRecognizer.view != nil else {return}
         
-        // Updates the position for the .began, .changed, and .ended states
+        // 1. The user finds elements: Find the cat - > Find the kitten -> Show the line -> Start game
         
         if gameStarted == false && levelComplete == false {
+            
+            // Find the cat: if the user position is inside the cat image, catShown becomes true and the kitten is shown
         
             if Utility.isInsideCat(cat: cat, point: initialPoint) {
                 
-                // If it is the first time finding the cat tell the user it has been found
-                // and show the kitten
-                // else tell the user it is the cat
+                catFoundHandler()
                 
-                print("cat: first tap")
-                
-                if catFound == 0 {
-                    UIAccessibility.post(notification: .announcement, argument: "You found the cat! Find the kitten")
-                }
-                
-                catFound = catFound + 1
-                
-                catSound.start()
-                
-                // Show the kitten
-                
-                catShown = true
-                kitten.isHidden = false
             }
+            
+            // Find the kitten: if the cat has been found and shown and the user position is inside the kitten image, the line is shown and gameStarted becomes true
         
-            if catShown == true {
+            if Utility.isInsideKitten(kitten: kitten, point: initialPoint) && catShown == true {
                 
-                if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
-                                        
-                    print("kitten: tap")
-                    
-                    if kittenFound == 0 {
-                        UIAccessibility.post(notification: .announcement, argument: "You found the kitten! Follow the line to connect the kitten to the cat")
-                    }
-                    
-                    kittenFound = kittenFound + 1
-                    
-                    kittenSound.start()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-                        
-                    self.redLine.isHidden = false
-                    
-                    // Start the game
-                    
-                    self.gameStarted = true
-                    })
-                }
+                kittenFoundHandler()
+                
             }
         }
         
+        // 2. The user connects the kitten to the cat: Start from the kitten -> Follow the line -> Go to the cat -> Level complete
+        
         if gameStarted == true {
+            
+            // Start from the kitten: if the user movement starts from the kitten startedFromKitten becomes true
             
             if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
                 
@@ -257,10 +227,16 @@ class Level1: UIViewController {
             })
         }
     }
+
+    // FUNCTIONS
+    
+    // 1. ONLOAD FUNCTIONS
     
     // Inizialization of AudioKit elements: cat and kitten sounds, oscillators
     
     func setAudioKitElements() -> Void {
+        
+        print("setAudioKitElements")
         
         // Creates AudioKit mixer and panner: adds cat and kitten sound
         
@@ -286,6 +262,8 @@ class Level1: UIViewController {
     // Sets positions and dimensions of view elements
     
     func setViewElements() -> Void {
+        
+        print("setViewElements")
         
         // Sets the width of the line image: 60% of screen width
         
@@ -318,9 +296,76 @@ class Level1: UIViewController {
         redLine.isHidden = true
     }
     
+    // 2. GAME LOGIC FUNCTIONS
+    
+    func catFoundHandler() -> Void {
+        
+        print("findTheCat")
+        
+        // If it's the first time finding the cat, tell the user to find the kitten
+        
+        if catFound == 0 {
+            UIAccessibility.post(notification: .announcement, argument: "You found the cat! Find the kitten")
+        }
+        
+        // Counter for number of cat image touches
+        
+        catFound = catFound + 1
+        
+        // Play cat sound
+        
+        catSound.start()
+        
+        // Show the kitten
+        
+        kitten.isHidden = false
+        
+        // Set the variable: the cat has been found and shown
+        
+        catShown = true
+    }
+    
+    func kittenFoundHandler() -> Void {
+        
+        print("findTheKitten")
+        
+        // If it's the first time finding the kitten, tell the user to follow the line
+        
+        if kittenFound == 0 {
+            UIAccessibility.post(notification: .announcement, argument: "You found the kitten! Follow the line to connect the kitten to the cat")
+        }
+        
+        // Counter for number of kitten image touches
+        
+        kittenFound = kittenFound + 1
+        
+        // Play kitten sound
+        
+        kittenSound.start()
+        
+        // After 2 seconds
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            
+            // Show the line
+            
+            self.redLine.isHidden = false
+            
+            // Set the variable: the kitten has been found, the line has been shown and the game can start
+            
+            self.gameStarted = true
+        })
+    }
+    
+    
+    // 3. UTILITY
+    
     // Creates a virtual line based on an equation: returns distance from given point
     
     func distPointLine(point: CGPoint) -> Double {
+        
+        print("distPointLine")
+        
         let a = Double(0)
         let b = Double(1)
         let c = Double(self.view.frame.size.height / 2)
@@ -333,6 +378,9 @@ class Level1: UIViewController {
     // Returns true if the given point is between the cat and kitten image
     
     func isBetweenCats(cat: UIImageView, kitten: UIImageView, point: CGPoint) -> Bool {
+        
+        print("isBetweenCats")
+        
         let kittenMaxX = kitten.frame.minX
         let catMinX = cat.frame.maxX
         
