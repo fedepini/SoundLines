@@ -10,7 +10,6 @@
 
 import UIKit
 import AudioKit
-import AVFoundation
 
 class Level3: UIViewController {
     
@@ -19,7 +18,6 @@ class Level3: UIViewController {
     var oscillator = AKFMOscillator()
     var oscillator2 = AKOscillator()
     var panner = AKPanner()
-    var mixerCat = AKMixer()
     
     var catSound: AKAudioPlayer!
     var kittenSound: AKAudioPlayer!
@@ -32,8 +30,8 @@ class Level3: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated:true);
         self.navigationController?.navigationBar.isHidden = true;
         
-        // Creates AudioKit mixer and panner
-        
+        // Creates AudioKit mixer and panner: adds cat and kitten sound
+
         let catFile = try! AKAudioFile(readFileName: "cat.wav")
         let kittenFile = try! AKAudioFile(readFileName: "kitten.wav")
         
@@ -241,49 +239,56 @@ class Level3: UIViewController {
                 let frameHeight = frameWidth / aspectRatio
                 
                 if (distPointLine(point: initialPoint) <= Double(frameHeight / 2)) {
-                    print("OK: point is inside shape, dist:", distPointLine(point: initialPoint))
                     
-                    // 1. Inside the line but not in the center
-                    
-                    oscillator2.stop()
-                    oscillator.baseFrequency = 300 + 10 * distPointLine(point: initialPoint)
-                    oscillator.amplitude = 1
-                    oscillator.start()
                     
                     if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
+                        oscillator2.stop()
                         oscillator.stop()
                         kittenSound.start()
                     } else if Utility.isInsideCat(cat: cat, point: initialPoint) {
+                        oscillator2.stop()
                         oscillator.stop()
                         catSound.start()
                     }
                     
-                    // 2. At the center of the line
-                    
-                    if (distPointLine(point: initialPoint) <= 5) {
-                        print("Inside the middle line")
+                    if isBetweenCats(cat: cat, kitten: kitten, point: initialPoint) {
+                        print("OK: point is inside shape, dist:", distPointLine(point: initialPoint))
+                        
+                        // 1. Inside the line but not in the center
+                        
                         oscillator2.stop()
+                        oscillator.baseFrequency = 300 + 10 * distPointLine(point: initialPoint)
+                        oscillator.amplitude = 1
+                        oscillator.start()
                         
-                        panner.pan = Utility.normalizePannerValue(cat: cat, kitten: kitten, num: Double(initialPoint.x))
                         
-                        oscillator.baseFrequency = 300
-                    }
-                    
-                    if Utility.isInsideCat(cat: cat, point: initialPoint) {
+                        // 2. At the center of the line
                         
-                        if startedFromKitten {
-                            print("Last point is inside element")
-                            oscillator.stop()
+                        if (distPointLine(point: initialPoint) <= 5) {
+                            print("Inside the middle line")
                             oscillator2.stop()
                             
-                            gameStarted = false
+                            panner.pan = Utility.normalizePannerValue(cat: cat, kitten: kitten, num: Double(initialPoint.x))
                             
-                            levelComplete = true
+                            oscillator.baseFrequency = 300
+                        }
+                        
+                        if Utility.isInsideCat(cat: cat, point: initialPoint) {
                             
-                        } else {
-                            print("Last point is outside element")
-                            print("restart game")
-                            UIAccessibility.post(notification: .announcement, argument: "Go back to the kitten and follow the line")
+                            if startedFromKitten {
+                                print("Last point is inside element")
+                                oscillator.stop()
+                                oscillator2.stop()
+                                
+                                gameStarted = false
+                                
+                                levelComplete = true
+                                
+                            } else {
+                                print("Last point is outside element")
+                                print("restart game")
+                                UIAccessibility.post(notification: .announcement, argument: "Go back to the kitten and follow the line")
+                            }
                         }
                     }
                     
@@ -344,5 +349,14 @@ class Level3: UIViewController {
         let den = sqrt(1 + pow(m, 2))
         
         return abs(b * Double(point.y) - (m * a * Double(point.x) + 146.0/333.0)) / den
+    }
+    
+    // Returns true if the given point is between the cat and kitten image
+    
+    func isBetweenCats(cat: UIImageView, kitten: UIImageView, point: CGPoint) -> Bool {
+        let kittenMaxX = kitten.frame.maxX
+        let catMinX = cat.frame.minX
+        
+        return point.x >= kittenMaxX && point.x <= catMinX
     }
 }
