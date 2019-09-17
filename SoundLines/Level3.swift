@@ -13,7 +13,7 @@ import AudioKit
 
 class Level3: UIViewController {
     
-    //AudioKit setup and start
+    // AudioKit setup and start
     
     var oscillator = AKFMOscillator()
     var oscillator2 = AKOscillator()
@@ -21,6 +21,21 @@ class Level3: UIViewController {
     
     var catSound: AKAudioPlayer!
     var kittenSound: AKAudioPlayer!
+    
+    // Variables
+    
+    @IBOutlet var kitten: UIImageView!
+    @IBOutlet var cat: UIImageView!
+    @IBOutlet var redLine: UIImageView!
+    
+    var gameStarted: Bool = false
+    var levelComplete: Bool = false
+
+    var startedFromKitten: Bool = false
+    var catShown: Bool = false
+    
+    var catFound = 0
+    var kittenFound = 0
     
     var diagonalAngle = Double()
     
@@ -30,78 +45,14 @@ class Level3: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated:true);
         self.navigationController?.navigationBar.isHidden = true;
         
-        // Creates AudioKit mixer and panner: adds cat and kitten sound
-
-        let catFile = try! AKAudioFile(readFileName: "cat.wav")
-        let kittenFile = try! AKAudioFile(readFileName: "kitten.wav")
+        // Inizialization of AudioKit elements: cat and kitten sounds, oscillators
         
-        catSound = try! AKAudioPlayer(file: catFile)
-        kittenSound = try! AKAudioPlayer(file: kittenFile)
+        setAudioKitElements()
         
-        let mixer = AKMixer(oscillator, oscillator2, catSound, kittenSound)
+        // Sets positions and dimensions of view elements
         
-        panner = AKPanner(mixer, pan: 0.0)
+        setViewElements()
         
-        AudioKit.output = panner
-        
-        // Audio is played with silent mode as well
-        
-        AKSettings.playbackWhileMuted = true
-        
-        try! AudioKit.start()
-        
-        // Sets the width of the line image: 40% of screen width
-        
-        let frameWidth = view.frame.size.width * 0.6
-        let aspectRatio = CGFloat(5.336)
-        let frameHeight = frameWidth / aspectRatio
-        
-        redLine.frame = CGRect(x:0, y:0, width:frameWidth, height:frameHeight)
-        
-        // Sets dimensions of kitten and cat images
-        
-        kitten.frame = CGRect(x:0, y:0, width: frameHeight, height: frameHeight)
-        cat.frame = CGRect(x:0, y:0, width: frameHeight, height: frameHeight)
-        
-        // Sets a frame for the images: the line image is centered horizontally and vertically
-        
-        redLine.frame.origin.x = CGFloat(self.view.frame.size.width / 2 - self.redLine.frame.width / 2)
-        redLine.frame.origin.y = CGFloat(self.view.frame.size.height / 2 - self.redLine.frame.height / 2)
-        
-        // Hides the kitten label
-        
-        kitten.isHidden = true
-        
-        // Hides the graphical line
-        
-        redLine.isHidden = true
-        
-        // Calculates diagonalAngle and rotates the image representing the line accordingly
-        
-        diagonalAngle = Double(atan(self.view.frame.size.height / self.view.frame.size.width))
-        self.redLine.transform = CGAffineTransform(rotationAngle: CGFloat(diagonalAngle))
-        
-        // Sets the position of the kitten and cat images: they are placed on the diagonal line
-        // between the two screen angles
-        
-        let kittenMinX = redLine.frame.minX - kitten.frame.size.width / 2
-        let kittenMinY = redLine.frame.minY - kitten.frame.size.height / 2
-        let kittenOldCenter = CGPoint(x:kittenMinX, y:kittenMinY)
-        
-        let kittenDistance = distPointLine(point: kittenOldCenter)
-        
-        kitten.frame.origin.x = kittenMinX - CGFloat(kittenDistance)
-        kitten.frame.origin.y = kittenMinY
-        
-        let catMaxX = redLine.frame.maxX - cat.frame.size.width / 2
-        let catMaxY = redLine.frame.maxY - cat.frame.size.height / 2
-        let catOldCenter = CGPoint(x:catMaxX, y:catMaxY)
-        
-        let catDistance = distPointLine(point: catOldCenter)
-        print(catDistance)
-        
-        cat.frame.origin.x = catMaxX + 11 * CGFloat(catDistance)
-        cat.frame.origin.y = catMaxY - CGFloat(catDistance)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -111,18 +62,6 @@ class Level3: UIViewController {
             try! AudioKit.stop()
         }
     }
-    
-    @IBOutlet var kitten: UIImageView!
-    @IBOutlet var cat: UIImageView!
-    @IBOutlet var redLine: UIImageView!
-    
-    var gameStarted: Bool = false
-    
-    var catShown: Bool = false
-    var levelComplete: Bool = false
-    
-    var startingPoint = CGPoint()
-    var startedFromKitten: Bool = false
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -145,10 +84,6 @@ class Level3: UIViewController {
     // it has the same heigth as the element
     
     // Detects panning on the shape and adds sonification based on the finger position
-    
-    var catFound = 0
-    var kittenFound = 0
-    var levelCompleteCounter = 0
     
     @IBAction func panDetector(_ gestureRecognizer: UIPanGestureRecognizer) {
         
@@ -189,9 +124,6 @@ class Level3: UIViewController {
                 
                 if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
                     
-                    startingPoint = initialPoint
-                    print("startingPoint 2: ", startingPoint)
-                    
                     print("kitten: tap")
                     
                     if kittenFound == 0 {
@@ -217,8 +149,6 @@ class Level3: UIViewController {
         if gameStarted == true {
             
             if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
-                startingPoint = initialPoint
-                print("startingPoint 2: ", startingPoint)
                 
                 startedFromKitten = true
                 
@@ -317,7 +247,6 @@ class Level3: UIViewController {
                 print("restart game")
                 UIAccessibility.post(notification: .announcement, argument: "Touch released, go back to the kitten and follow the line")
                 startedFromKitten = false
-                levelCompleteCounter = 0
             }
         }
         
@@ -339,7 +268,93 @@ class Level3: UIViewController {
             })
         }
     }
+    
+    // FUNCTIONS
+    
+    // Inizialization of AudioKit elements: cat and kitten sounds, oscillators
+    
+    func setAudioKitElements() -> Void {
+        
+        // Creates AudioKit mixer and panner: adds cat and kitten sound
+        
+        let catFile = try! AKAudioFile(readFileName: "cat.wav")
+        let kittenFile = try! AKAudioFile(readFileName: "kitten.wav")
+        
+        catSound = try! AKAudioPlayer(file: catFile)
+        kittenSound = try! AKAudioPlayer(file: kittenFile)
+        
+        let mixer = AKMixer(oscillator, oscillator2, catSound, kittenSound)
+        
+        panner = AKPanner(mixer, pan: 0.0)
+        
+        AudioKit.output = panner
+        
+        // Audio is played with silent mode as well
+        
+        AKSettings.playbackWhileMuted = true
+        
+        try! AudioKit.start()
+    }
+    
+    // Sets positions and dimensions of view elements
+    
+    func setViewElements() -> Void {
+        // Sets the width of the line image: 40% of screen width
+        
+        let frameWidth = view.frame.size.width * 0.6
+        let aspectRatio = CGFloat(5.336)
+        let frameHeight = frameWidth / aspectRatio
+        
+        redLine.frame = CGRect(x:0, y:0, width:frameWidth, height:frameHeight)
+        
+        // Sets dimensions of kitten and cat images
+        
+        kitten.frame = CGRect(x:0, y:0, width: frameHeight, height: frameHeight)
+        cat.frame = CGRect(x:0, y:0, width: frameHeight, height: frameHeight)
+        
+        // Sets a frame for the images: the line image is centered horizontally and vertically
+        
+        redLine.frame.origin.x = CGFloat(self.view.frame.size.width / 2 - self.redLine.frame.width / 2)
+        redLine.frame.origin.y = CGFloat(self.view.frame.size.height / 2 - self.redLine.frame.height / 2)
+        
+        // Hides the kitten label
+        
+        kitten.isHidden = true
+        
+        // Hides the graphical line
+        
+        redLine.isHidden = true
+        
+        // Calculates diagonalAngle and rotates the image representing the line accordingly
+        
+        diagonalAngle = Double(atan(self.view.frame.size.height / self.view.frame.size.width))
+        self.redLine.transform = CGAffineTransform(rotationAngle: CGFloat(diagonalAngle))
+        
+        // Sets the position of the kitten and cat images: they are placed on the diagonal line
+        // between the two screen angles
+        
+        let kittenMinX = redLine.frame.minX - kitten.frame.size.width / 2
+        let kittenMinY = redLine.frame.minY - kitten.frame.size.height / 2
+        let kittenOldCenter = CGPoint(x:kittenMinX, y:kittenMinY)
+        
+        let kittenDistance = distPointLine(point: kittenOldCenter)
+        
+        kitten.frame.origin.x = kittenMinX - CGFloat(kittenDistance)
+        kitten.frame.origin.y = kittenMinY
+        
+        let catMaxX = redLine.frame.maxX - cat.frame.size.width / 2
+        let catMaxY = redLine.frame.maxY - cat.frame.size.height / 2
+        let catOldCenter = CGPoint(x:catMaxX, y:catMaxY)
+        
+        let catDistance = distPointLine(point: catOldCenter)
+        print(catDistance)
+        
+        cat.frame.origin.x = catMaxX + 11 * CGFloat(catDistance)
+        cat.frame.origin.y = catMaxY - CGFloat(catDistance)
+    }
 
+    // Creates a virtual line based on an equation: returns distance from given point
+    
     func distPointLine(point: CGPoint) -> Double {
         let a = Double(1)
         let b = Double(1)
@@ -355,8 +370,8 @@ class Level3: UIViewController {
     
     func isBetweenCats(cat: UIImageView, kitten: UIImageView, point: CGPoint) -> Bool {
         let kittenMaxX = kitten.frame.maxX
-        let catMinX = cat.frame.minX
+        let catMaxX = cat.frame.maxX
         
-        return point.x >= kittenMaxX && point.x <= catMinX
+        return point.x >= kittenMaxX && point.x <= catMaxX
     }
 }

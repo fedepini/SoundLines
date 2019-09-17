@@ -22,62 +22,35 @@ class Level1: UIViewController {
     var catSound: AKAudioPlayer!
     var kittenSound: AKAudioPlayer!
     
+    // Variables
+    
+    @IBOutlet var cat: UIImageView!
+    @IBOutlet var kitten: UIImageView!
+    @IBOutlet var redLine: UIImageView!
+    
+    var gameStarted: Bool = false
+    var levelComplete: Bool = false
+
+    var catShown: Bool = false
+    var startedFromKitten: Bool = false
+    
+    var kittenFound = 0
+    var catFound = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.setHidesBackButton(true, animated:true);
         self.navigationController?.navigationBar.isHidden = true;
         
-        // Creates AudioKit mixer and panner: adds cat and kitten sound
+        // Inizialization of AudioKit elements: cat and kitten sounds, oscillators
         
-        let catFile = try! AKAudioFile(readFileName: "cat.wav")
-        let kittenFile = try! AKAudioFile(readFileName: "kitten.wav")
+        setAudioKitElements()
         
-        catSound = try! AKAudioPlayer(file: catFile)
-        kittenSound = try! AKAudioPlayer(file: kittenFile)
-        
-        let mixer = AKMixer(oscillator, oscillator2, catSound, kittenSound)
-        
-        panner = AKPanner(mixer, pan: 0.0)
-        
-        AudioKit.output = panner
-        
-        // Audio is played with silent mode as well
-        
-        AKSettings.playbackWhileMuted = true
-        
-        try! AudioKit.start()
-        
-        // Sets the width of the line image: 60% of screen width
-        
-        let frameWidth = view.frame.size.width * 0.6
-        let aspectRatio = CGFloat(5.336)
-        let frameHeight = frameWidth / aspectRatio
-        
-        redLine.frame = CGRect(x:0, y:0, width:frameWidth, height:frameHeight)
-        
-        // Sets dimensions of kitten and cat images
-        
-        kitten.frame = CGRect(x:0, y:0, width: frameHeight, height: frameHeight)
-        cat.frame = CGRect(x:0, y:0, width: frameHeight, height: frameHeight)
-        
-        // Sets a frame for the images: the line image is centered horizontally and vertically
-        // while kitten and cat are centered vertically and have some distance from the line image
-        
-        redLine.frame.origin.x = CGFloat(self.view.frame.size.width / 2 - self.redLine.frame.width / 2)
-        redLine.frame.origin.y = CGFloat(self.view.frame.size.height / 2 - self.redLine.frame.height / 2)
-        
-        kitten.frame.origin.x = redLine.frame.minX - kitten.frame.size.width - 10.0
-        kitten.frame.origin.y = CGFloat(self.view.frame.size.height / 2 - kitten.frame.size.height / 2)
-        
-        cat.frame.origin.x = redLine.frame.maxX + 10.0
-        cat.frame.origin.y = CGFloat(self.view.frame.size.height / 2 - cat.frame.size.height / 2)
-        
-        // Hides the kitten label
-        
-        kitten.isHidden = true
-        redLine.isHidden = true
+        // Sets positions and dimensions of view elements
 
+        setViewElements()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -87,19 +60,6 @@ class Level1: UIViewController {
             try! AudioKit.stop()
         }
     }
-    
-    @IBOutlet var cat: UIImageView!
-    @IBOutlet var kitten: UIImageView!
-    @IBOutlet var redLine: UIImageView!
-    
-    
-    var gameStarted: Bool = false
-    
-    var catShown: Bool = false
-    var levelComplete: Bool = false
-    
-    var startingPoint = CGPoint()
-    var startedFromKitten: Bool = false
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -122,10 +82,6 @@ class Level1: UIViewController {
     // it has the same heigth as the element
     
     // Detects panning on the shape and adds sonification based on the finger position
-    
-    var kittenFound = 0
-    var catFound = 0
-    var levelCompleteCounter = 0
     
     @IBAction func panDetector(_ gestureRecognizer: UIPanGestureRecognizer) {
         
@@ -166,9 +122,7 @@ class Level1: UIViewController {
             if catShown == true {
                 
                 if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
-                    
-                    startingPoint = initialPoint
-                    
+                                        
                     print("kitten: tap")
                     
                     if kittenFound == 0 {
@@ -194,8 +148,6 @@ class Level1: UIViewController {
         if gameStarted == true {
             
             if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
-                startingPoint = initialPoint
-                print("startingPoint 2: ", startingPoint)
                 
                 startedFromKitten = true
             }
@@ -260,7 +212,6 @@ class Level1: UIViewController {
                         }
                     }
                     
-                    
                 } else {
                     // 3. Outside the line
                     
@@ -286,7 +237,6 @@ class Level1: UIViewController {
                 print("restart game")
                 UIAccessibility.post(notification: .announcement, argument: "Touch released, go back to the kitten and follow the line")
                 startedFromKitten = false
-                levelCompleteCounter = 0
             }
         }
         
@@ -307,6 +257,68 @@ class Level1: UIViewController {
             })
         }
     }
+    
+    // Inizialization of AudioKit elements: cat and kitten sounds, oscillators
+    
+    func setAudioKitElements() -> Void {
+        
+        // Creates AudioKit mixer and panner: adds cat and kitten sound
+        
+        let catFile = try! AKAudioFile(readFileName: "cat.wav")
+        let kittenFile = try! AKAudioFile(readFileName: "kitten.wav")
+        
+        catSound = try! AKAudioPlayer(file: catFile)
+        kittenSound = try! AKAudioPlayer(file: kittenFile)
+        
+        let mixer = AKMixer(oscillator, oscillator2, catSound, kittenSound)
+        
+        panner = AKPanner(mixer, pan: 0.0)
+        
+        AudioKit.output = panner
+        
+        // Audio is played with silent mode as well
+        
+        AKSettings.playbackWhileMuted = true
+        
+        try! AudioKit.start()
+    }
+    
+    // Sets positions and dimensions of view elements
+    
+    func setViewElements() -> Void {
+        
+        // Sets the width of the line image: 60% of screen width
+        
+        let frameWidth = view.frame.size.width * 0.6
+        let aspectRatio = CGFloat(5.336)
+        let frameHeight = frameWidth / aspectRatio
+        
+        redLine.frame = CGRect(x:0, y:0, width:frameWidth, height:frameHeight)
+        
+        // Sets dimensions of kitten and cat images
+        
+        kitten.frame = CGRect(x:0, y:0, width: frameHeight, height: frameHeight)
+        cat.frame = CGRect(x:0, y:0, width: frameHeight, height: frameHeight)
+        
+        // Sets a frame for the images: the line image is centered horizontally and vertically
+        // while kitten and cat are centered vertically and have some distance from the line image
+        
+        redLine.frame.origin.x = CGFloat(self.view.frame.size.width / 2 - self.redLine.frame.width / 2)
+        redLine.frame.origin.y = CGFloat(self.view.frame.size.height / 2 - self.redLine.frame.height / 2)
+        
+        kitten.frame.origin.x = redLine.frame.minX - kitten.frame.size.width - 10.0
+        kitten.frame.origin.y = CGFloat(self.view.frame.size.height / 2 - kitten.frame.size.height / 2)
+        
+        cat.frame.origin.x = redLine.frame.maxX + 10.0
+        cat.frame.origin.y = CGFloat(self.view.frame.size.height / 2 - cat.frame.size.height / 2)
+        
+        // Hides the kitten label
+        
+        kitten.isHidden = true
+        redLine.isHidden = true
+    }
+    
+    // Creates a virtual line based on an equation: returns distance from given point
     
     func distPointLine(point: CGPoint) -> Double {
         let a = Double(0)
