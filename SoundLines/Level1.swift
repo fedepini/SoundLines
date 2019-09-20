@@ -122,109 +122,97 @@ class Level1: UIViewController {
                 startedFromKitten = true
             }
             
+            // PanDetector state: changed. The finger has moved.
+            
             if gestureRecognizer.state == .changed {
-                print(initialPoint)
           
                 // Distinguishes 3 cases based on the finger position:
-                // 1. Inside the line but not in the center
-                // 2. At the center of the line
+                // 1. Inside the line: not in the center
+                // 2. Inside the line: at the center of the line
                 // 3. Outside the line
                 
-                // The finger is inside the line
-                
+                // 1 & 2. Inside the line
+
                 if (distPointLine(point: initialPoint) <= Double(redLine.frame.height / 2)){
                     print("OK: point is inside shape, dist:", distPointLine(point: initialPoint))
                     
+                    // If the finger position is between the two cat images start oscillator
+                    // or play cat or kitten sound
+                    
                     if isBetweenCats(cat: cat, kitten: kitten, point: initialPoint) {
+                        
                         // 1. Inside the line but not in the center
                         
-                        oscillator2.stop()
-                        oscillator.baseFrequency = 300 + 10 * distPointLine(point: initialPoint)
-                        oscillator.amplitude = 1
+                        startInsideLineOscillator(point: initialPoint)
                         
-                        oscillator.start()
+                        // If the user touches the kitten image play kitten sound
                         
                         if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
-                            oscillator.stop()
-                            kittenSound.start()
-                        } else if Utility.isInsideCat(cat: cat, point: initialPoint) {
-                            oscillator.stop()
-                            catSound.start()
+                            
+                            playKittenSound()
+                            
+                        }
+                        
+                        // If the user touches the cat image play cat sound
+                        
+                        if Utility.isInsideCat(cat: cat, point: initialPoint) {
+                            
+                            playCatSound()
+                            
                         }
                         
                         // 2. At the center of the line
                         
+                        // If the finger position is at the center of the line start the second oscillator, whose frequency is fixed
+                        
                         if (distPointLine(point: initialPoint) <= 5) {
-                            print("Inside the middle line")
-                            oscillator2.stop()
+
+                            startCenterLineOscillator(point: initialPoint)
                             
-                            panner.pan = Utility.normalizePannerValue(cat: cat, kitten: kitten, num: Double(initialPoint.x))
-                            
-                            oscillator.baseFrequency = 300
                         }
+                        
+                        // If the user has moved from the kitten to the cat levelComplete becomes true, else the user is notified to restart from the kitten
                         
                         if Utility.isInsideCat(cat: cat, point: initialPoint) {
                             
+                            // If the user movement has started from the kitten the oscillators stop and levelComplete becomes true
+                            
                             if startedFromKitten {
-                                print("Last point is inside element")
-                                oscillator.stop()
-                                oscillator2.stop()
                                 
-                                gameStarted = false
-                                
-                                levelComplete = true
+                                lastPointInsideCatHandler()
                                 
                             } else {
-                                print("Last point is outside element")
-                                print("restart game")
-                                UIAccessibility.post(notification: .announcement, argument: "Go back to the kitten and follow the line")
+                                
+                                lastPointNotInsideCatHandler()
                             }
                         }
                     }
                     
                 } else {
-                    // 3. Outside the line
                     
-                    print("NO: point is outside shape")
+                // 3. Outside the line
                     
-                    panner.pan = 0.0
-                    
-                    oscillator.stop()
-                    oscillator2.amplitude = 0.5
-                    oscillator2.frequency = 200
-                    oscillator2.start()
-                    
-                    startedFromKitten = false
-                    
-                    print("restart game")
+                    outsideLineHandler()
                 }
             }
             
+            // PanDetector state: ended. The finger has been released.
+            
+            // If the finger has been released, the oscillators are stopped, the user is alerted and startedFromKitten becomes false
+            
             if gestureRecognizer.state == .ended {
-                oscillator.stop()
-                oscillator2.stop()
-                print("Pan released")
-                print("restart game")
-                UIAccessibility.post(notification: .announcement, argument: "Touch released, go back to the kitten and follow the line")
-                startedFromKitten = false
+                
+                panEndedHandler()
+                
             }
         }
         
+        // 3. Level complete: redirect to the next screen
+        
         if levelComplete == true {
             
-            gestureRecognizer.isEnabled = false
+            levelCompleteHandler(gestureRecognizer: gestureRecognizer)
             
-            UIAccessibility.post(notification: .announcement, argument: "Well done! Level 1 completed")
-            
-            catSound.start()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-                try! AudioKit.stop()
-
-                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let level2Screen = storyBoard.instantiateViewController(withIdentifier: "Level2Screen")
-                self.present(level2Screen, animated: true, completion: nil)
-            })
         }
     }
 
@@ -232,7 +220,7 @@ class Level1: UIViewController {
     
     // 1. ONLOAD FUNCTIONS
     
-    // Inizialization of AudioKit elements: cat and kitten sounds, oscillators
+    // setAudioKitElements: inizialization of AudioKit elements: cat and kitten sounds, oscillators
     
     func setAudioKitElements() -> Void {
         
@@ -259,7 +247,7 @@ class Level1: UIViewController {
         try! AudioKit.start()
     }
     
-    // Sets positions and dimensions of view elements
+    // setViewElements: sets positions and dimensions of view elements
     
     func setViewElements() -> Void {
         
@@ -298,6 +286,8 @@ class Level1: UIViewController {
     
     // 2. GAME LOGIC FUNCTIONS
     
+    // catFoundHandler: if the user position is inside the cat image, catShown becomes true and the kitten is shown
+    
     func catFoundHandler() -> Void {
         
         print("findTheCat")
@@ -324,6 +314,8 @@ class Level1: UIViewController {
         
         catShown = true
     }
+    
+    // kittenFoundHandler: if the cat has been found and shown and the user position is inside the kitten image, the line is shown and gameStarted becomes true
     
     func kittenFoundHandler() -> Void {
         
@@ -357,10 +349,177 @@ class Level1: UIViewController {
         })
     }
     
+    // startInsideTheLineOscillator: if cat, kitten and line have been shown and the finger is between the to cat images, start the first oscillator, whose frequency depends on distance from the middle line
+    
+    func startInsideLineOscillator(point: CGPoint) -> Void {
+        
+        print("startInsideLineOscillator")
+        
+        // Stops other oscillators playing
+        
+        oscillator2.stop()
+        
+        // Sets up and starts the oscillator
+        
+        oscillator.baseFrequency = 300 + 10 * distPointLine(point: point)
+        oscillator.amplitude = 1
+        oscillator.start()
+    }
+    
+    // startCenterLineOscillator: stops others oscillators and starts the center line oscillator, whose frequency is fixed
+    
+    func startCenterLineOscillator(point: CGPoint) -> Void {
+        
+        print("startCenterLineOscillator")
+        
+        // Stops other oscillators
+        
+        oscillator2.stop()
+        
+        // Sets panner value for the oscillator: necessary for sound spatialization, which depends from finger horizontal position (sound "moves" accordingly from left to right and vice versa)
+        
+        panner.pan = Utility.normalizePannerValue(cat: cat, kitten: kitten, num: Double(point.x))
+        
+        // Fixes the frequency for the oscillator
+        
+        oscillator.baseFrequency = 300
+    }
+    
+    // lastPointInsideCatHandler: if the user has moved from the kitten to the cat the oscillators are stopped and levelComplete becomes true
+    
+    func lastPointInsideCatHandler() -> Void {
+        
+        print("lastPointInsideCatHandler")
+        
+        // Stops the oscillators
+        
+        oscillator.stop()
+        oscillator2.stop()
+        
+        // Stops the game
+        
+        gameStarted = false
+        
+        // Sets levelComplete to true
+        
+        levelComplete = true
+    }
+    
+    // lastPointNotInsideCatHandler: if the user has moved from the kitten but not to the cat, an alert message is read
+    
+    func lastPointNotInsideCatHandler() -> Void {
+        
+        print("lastPointNotInsideCatHandler")
+        
+        // Tells the user to restart
+        
+        UIAccessibility.post(notification: .announcement, argument: "Go back to the kitten and follow the line")
+    }
+    
+    // outsideLineHandler: if the finger position is outside the line, set up an oscillator with fixed and lower frequency
+    
+    func outsideLineHandler() -> Void {
+        
+        print("outsideLineHandler")
+        
+        // Sets panner value for the oscillator: necessary for sound spatialization
+        
+        panner.pan = 0.0
+        
+        // Sets up and starts the second oscillator
+        
+        oscillator.stop()
+        oscillator2.amplitude = 0.5
+        oscillator2.frequency = 200
+        oscillator2.start()
+        
+        // StartedFromKitten becomes false
+        
+        startedFromKitten = false
+    }
+    
+    // panEndedHandler: if the finger has been released, the oscillators are stopped, the user is alerted and startedFromKitten becomes false
+    
+    func panEndedHandler() -> Void {
+        
+        print("panEndedHandler")
+        
+        // Stops other oscillators
+        
+        oscillator.stop()
+        oscillator2.stop()
+
+        // Tells the user to restart the movement from kitten
+        
+        UIAccessibility.post(notification: .announcement, argument: "Touch released, go back to the kitten and follow the line")
+        
+        // Sets startedFromKitten false
+        
+        startedFromKitten = false
+    }
+    
+    // levelCompleteHandler: the user has moved from kitten to the cat and has completed the level. Stops gestureRecognizer, tells the user level is completed, plays cat sound and redirects to the next screen
+    
+    func levelCompleteHandler(gestureRecognizer: UIGestureRecognizer) -> Void {
+        
+        print("levelCompleteHandler")
+        
+        // Stops gestureRecognizer
+        
+        gestureRecognizer.isEnabled = false
+        
+        // Tells the user level is completed
+        
+        UIAccessibility.post(notification: .announcement, argument: "Well done! Level 1 completed")
+        
+        // Plays cat sound
+        
+        playCatSound()
+        
+        // Redirects to the next screen
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            try! AudioKit.stop()
+            
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let level2Screen = storyBoard.instantiateViewController(withIdentifier: "Level2Screen")
+            self.present(level2Screen, animated: true, completion: nil)
+        })
+    }
+    
+    // playKittenSound: stops other oscillators and plays kitten sound
+    
+    func playKittenSound() -> Void {
+        
+        print("playKittenSound")
+        
+        // Stops other oscillators
+        
+        oscillator.stop()
+        
+        // Plays kitten sound
+        
+        kittenSound.start()
+    }
+    
+    // playCatSound: stops other oscillators and plays cat sound
+    
+    func playCatSound() -> Void {
+        
+        print("playCatSound")
+        
+        // Stops other oscillators
+        
+        oscillator.stop()
+        
+        // Plays kitten sound
+        
+        catSound.start()
+    }
     
     // 3. UTILITY
     
-    // Creates a virtual line based on an equation: returns distance from given point
+    // distPointLine: creates a virtual line based on an equation: returns distance from given point
     
     func distPointLine(point: CGPoint) -> Double {
         
@@ -375,7 +534,7 @@ class Level1: UIViewController {
         return abs(a * Double(point.x) + b * Double(point.y) - c) / den
     }
     
-    // Returns true if the given point is between the cat and kitten image
+    // isBetweenCats: returns true if the given point is between the cat and kitten image
     
     func isBetweenCats(cat: UIImageView, kitten: UIImageView, point: CGPoint) -> Bool {
         
