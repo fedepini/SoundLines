@@ -476,10 +476,15 @@ class Level1: UIViewController {
         
         playCatSound()
         
-        // Redirects to the next screen
+        // After 2 seconds
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            
+            // Stops AudioKit
+            
             try! AudioKit.stop()
+            
+            // Redirects to the next screen
             
             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let level2Screen = storyBoard.instantiateViewController(withIdentifier: "Level2Screen")
