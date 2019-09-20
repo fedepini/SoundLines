@@ -40,6 +40,8 @@ class Level1: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Hides back button and navigation bar
+        
         self.navigationItem.setHidesBackButton(true, animated:true);
         self.navigationController?.navigationBar.isHidden = true;
         
