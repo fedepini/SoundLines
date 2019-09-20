@@ -2,11 +2,7 @@
 //  Level1.swift
 //  SoundLines
 //
-//  Created by simona1971 on 25/06/19.
-//  Copyright © 2019 Comelicode. All rights reserved.
 //
-// Level1: creates two elements, then a line between them, and detects if
-// the user pans inside the line
 
 import UIKit
 import AudioKit
@@ -136,7 +132,6 @@ class Level1: UIViewController {
                 // 1 & 2. Inside the line
 
                 if (distPointLine(point: initialPoint) <= Double(redLine.frame.height / 2)){
-                    print("OK: point is inside shape, dist:", distPointLine(point: initialPoint))
                     
                     // If the finger position is between the two cat images start oscillator
                     // or play cat or kitten sound

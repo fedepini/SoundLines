@@ -2,8 +2,6 @@
 //  Level3Screen.swift
 //  SoundLines
 //
-//  Created by Fede on 21/07/19.
-//  Copyright © 2019 Comelicode. All rights reserved.
 //
 
 import UIKit

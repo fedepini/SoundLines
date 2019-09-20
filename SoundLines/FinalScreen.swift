@@ -2,8 +2,6 @@
 //  FinalScreen.swift
 //  SoundLines
 //
-//  Created by Fede on 26/08/19.
-//  Copyright © 2019 Comelicode. All rights reserved.
 //
 
 import UIKit

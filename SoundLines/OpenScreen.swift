@@ -2,8 +2,6 @@
 //  OpenScreen.swift
 //  SoundLines
 //
-//  Created by Fede on 10/09/19.
-//  Copyright © 2019 Comelicode. All rights reserved.
 //
 
 import Foundation

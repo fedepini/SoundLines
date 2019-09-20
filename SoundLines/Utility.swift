@@ -1,8 +1,7 @@
 //
 //  Utility.swift
-//  
+//  SoundLines
 //
-//  Created by Fede on 23/08/19.
 //
 
 import Foundation
@@ -13,6 +12,9 @@ class Utility {
     // Returns true if the given point is inside the cat image
  
     class func isInsideCat(cat: UIImageView, point: CGPoint) -> Bool {
+        
+        print("isInsideCat")
+        
         let catMaxX = cat.frame.maxX
         let catMinX = cat.frame.minX
         let catMaxY = cat.frame.maxY
@@ -25,6 +27,9 @@ class Utility {
     // Returns true if the given point is inside the kitten image
     
     class func isInsideKitten(kitten: UIImageView, point: CGPoint) -> Bool {
+        
+        print("isInsideKitten")
+        
         let kittenMaxX = kitten.frame.maxX
         let kittenMinX = kitten.frame.minX
         let kittenMaxY = kitten.frame.maxY
@@ -37,8 +42,12 @@ class Utility {
     // Normalizes double values for AudioKit panner
     
     class func normalizePannerValue(cat: UIImageView, kitten: UIImageView, num: Double) -> Double {
+        
+        print("normalizePannerValue")
+        
         let min = Double(kitten.frame.minX + 10)
         let max = Double(cat.frame.maxX - 10)
+        
         return 2 * ((num - min) / (max - min)) - 1
     }
 }

@@ -2,8 +2,6 @@
 //  AppDelegate.swift
 //  SoundLines
 //
-//  Created by simona1971 on 13/06/19.
-//  Copyright © 2019 Comelicode. All rights reserved.
 //
 
 import UIKit
