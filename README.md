@@ -14,10 +14,10 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 * a MacOS device - Necessary to run Xcode
-* an iOS device - Necessary to test VoiceOver interactions
-* [VoiceOver](https://www.apple.com/accessibility/) activated - iOS's accessibily tool for screen reading
 * [Xcode](https://developer.apple.com/xcode/) - Apple's IDE for app development
 * [AudioKit](https://audiokit.io/) - Framework used to manage sound elements
+* an iOS device - For VoiceOver interactions testing
+* [VoiceOver](https://www.apple.com/accessibility/) - iOS's accessibily tool for screen reading
 
 ### Installing
 
@@ -53,7 +53,7 @@ $ git clone https://github.com/fedepini/SoundLines
 5. Done! You can try SoundLines on Xcode iOS simulators or, for a complete test, on an iOS device with VoiceOver activated. To activate VoiceOver on your device go to:
 
 ```
-Settings -> General - Accessibility -> VoiceOver
+Settings -> General -> Accessibility -> VoiceOver
 ```
 
 
