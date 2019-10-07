@@ -45,8 +45,8 @@ class Utility {
         
         print("normalizePannerValue")
         
-        let min = Double(kitten.frame.minX + 10)
-        let max = Double(cat.frame.maxX - 10)
+        let min = Double(kitten.frame.minX)
+        let max = Double(cat.frame.maxX)
         
         return 2 * ((num - min) / (max - min)) - 1
     }

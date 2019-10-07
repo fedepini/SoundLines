@@ -88,6 +88,22 @@ class Level3: UIViewController {
         
         let initialPoint = gestureRecognizer.location(in: view)
         
+        // Every time the user touches the cat image, cat sound is played
+        
+        if Utility.isInsideCat(cat: cat, point: initialPoint) {
+            
+            playCatSound()
+            
+        }
+        
+        // Every time the user touches the kitten image, kitten sound is played
+        
+        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
+            
+            playKittenSound()
+            
+        }
+        
         guard gestureRecognizer.view != nil else {return}
         
         // 1. The user finds elements: Find the cat - > Find the kitten -> Show the line -> Start game
@@ -149,22 +165,11 @@ class Level3: UIViewController {
                         
                         // 1. Inside the line but not in the center
                         
-                        startInsideLineOscillator(point: initialPoint)
+                        // If the finger position is between the two cat images but not inside them play the line oscillator
                         
-                        // If the user touches the kitten image play kitten sound
-                        
-                        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
+                        if !Utility.isInsideKitten(kitten: kitten, point: initialPoint) && !Utility.isInsideCat(cat: cat, point: initialPoint) {
                             
-                            playKittenSound()
-                            
-                        }
-                        
-                        // If the user touches the cat image play cat sound
-                        
-                        if Utility.isInsideCat(cat: cat, point: initialPoint) {
-                            
-                            playCatSound()
-                            
+                            startInsideLineOscillator(point: initialPoint)
                         }
                         
                         // 2. At the center of the line
@@ -239,6 +244,11 @@ class Level3: UIViewController {
         
         catSound = try! AKAudioPlayer(file: catFile)
         kittenSound = try! AKAudioPlayer(file: kittenFile)
+        
+        // Kitten sound is heard on left ear, cat sound is heard on right ear
+        
+        catSound.pan = 1.0
+        kittenSound.pan = -1.0
         
         let mixer = AKMixer(oscillator, oscillator2, catSound, kittenSound)
         
@@ -500,10 +510,6 @@ class Level3: UIViewController {
         // Tells the user level is completed
         
         UIAccessibility.post(notification: .announcement, argument: "Well done! Level 3 completed")
-        
-        // Plays cat sound
-        
-        playCatSound()
         
         // After 2 seconds
         

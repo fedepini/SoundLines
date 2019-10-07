@@ -15,6 +15,10 @@ class FinalScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Sets view elements dimension and position
+        
+        setViewElements()
+        
         // Reads label if VoiceOver is activated
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {

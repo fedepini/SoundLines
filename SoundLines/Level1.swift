@@ -24,6 +24,10 @@ class Level1: UIViewController {
     @IBOutlet var kitten: UIImageView!
     @IBOutlet var redLine: UIImageView!
     
+    @IBOutlet var findTheCatLabel: UILabel!
+    @IBOutlet var findTheKittenLabel: UILabel!
+    @IBOutlet var followTheLineLabel: UILabel!
+    
     var gameStarted: Bool = false
     var levelComplete: Bool = false
 
@@ -49,6 +53,10 @@ class Level1: UIViewController {
 
         setViewElements()
         
+        // Sets positions, dimensions and view of view elements
+        
+        setTutorialElements()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,6 +76,18 @@ class Level1: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
                 UIAccessibility.post(notification: .announcement, argument: "Find the cat")
             })
+            
+            // If the tutorial mode is activated show visual instructions to the user
+            
+            if Variables.tutorialModeActivated == true {
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0) + .milliseconds(500), execute: {
+                    
+                    self.findTheCatLabel.isHidden = false
+                    
+                })
+            }
+            
         }
     }
     
@@ -85,6 +105,22 @@ class Level1: UIViewController {
         // Saves the point touched by the user
         
         let initialPoint = gestureRecognizer.location(in: view)
+        
+        // Every time the user touches the cat image, cat sound is played
+        
+        if Utility.isInsideCat(cat: cat, point: initialPoint) {
+            
+            playCatSound()
+            
+        }
+        
+        // Every time the user touches the kitten image, kitten sound is played
+        
+        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
+            
+            playKittenSound()
+            
+        }
         
         guard gestureRecognizer.view != nil else {return}
         
@@ -131,38 +167,28 @@ class Level1: UIViewController {
                 
                 // 1 & 2. Inside the line
 
-                if (distPointLine(point: initialPoint) <= Double(redLine.frame.height / 2)){
+                if (distPointLine(point: initialPoint) <= Double(redLine.frame.height / 2)) {
                     
                     // If the finger position is between the two cat images start oscillator
                     // or play cat or kitten sound
                     
                     if isBetweenCats(cat: cat, kitten: kitten, point: initialPoint) {
                         
+                        
                         // 1. Inside the line but not in the center
                         
-                        startInsideLineOscillator(point: initialPoint)
+                        // If the finger position is between the two cat images but not inside them play the line oscillator
                         
-                        // If the user touches the kitten image play kitten sound
+                        if !Utility.isInsideKitten(kitten: kitten, point: initialPoint) && !Utility.isInsideCat(cat: cat, point: initialPoint) {
                         
-                        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
-                            
-                            playKittenSound()
-                            
-                        }
-                        
-                        // If the user touches the cat image play cat sound
-                        
-                        if Utility.isInsideCat(cat: cat, point: initialPoint) {
-                            
-                            playCatSound()
-                            
+                            startInsideLineOscillator(point: initialPoint)
                         }
                         
                         // 2. At the center of the line
                         
                         // If the finger position is at the center of the line start the second oscillator, whose frequency is fixed
                         
-                        if (distPointLine(point: initialPoint) <= 5) {
+                        if distPointLine(point: initialPoint) <= 5 {
 
                             startCenterLineOscillator(point: initialPoint)
                             
@@ -231,6 +257,11 @@ class Level1: UIViewController {
         catSound = try! AKAudioPlayer(file: catFile)
         kittenSound = try! AKAudioPlayer(file: kittenFile)
         
+        // Kitten sound is heard on left ear, cat sound is heard on right ear
+        
+        catSound.pan = 1.0
+        kittenSound.pan = -1.0
+        
         let mixer = AKMixer(oscillator, oscillator2, catSound, kittenSound)
         
         panner = AKPanner(mixer, pan: 0.0)
@@ -281,6 +312,44 @@ class Level1: UIViewController {
         redLine.isHidden = true
     }
     
+    // setTutorialElements: sets positions and dimensions of view elements
+    
+    func setTutorialElements() -> Void {
+        
+        print ("setTutorialElements")
+        
+        let screenWidth = view.frame.width
+        let screenHeight = view.frame.size.height
+        
+        // Sets findTheCatLabel dimension and position
+        
+        findTheCatLabel.sizeToFit()
+        findTheCatLabel.frame = CGRect(x: 0, y: 0, width: screenWidth * 0.8, height: screenHeight * 0.4)
+        findTheCatLabel.center.x = self.view.center.x
+        findTheCatLabel.center.y = self.view.center.y - screenWidth * 0.2
+        
+        // Sets findTheKittenLabel dimension and position
+        
+        findTheKittenLabel.sizeToFit()
+        findTheKittenLabel.frame = CGRect(x: 0, y: 0, width: screenWidth * 0.8, height: screenHeight * 0.4)
+        findTheKittenLabel.center.x = self.view.center.x
+        findTheKittenLabel.center.y = self.view.center.y - screenWidth * 0.2
+        
+        // Sets followTheLineLabel dimension and position
+        
+        followTheLineLabel.sizeToFit()
+        followTheLineLabel.frame = CGRect(x: 0, y: 0, width: screenWidth * 0.8, height: screenHeight * 0.4)
+        followTheLineLabel.center.x = self.view.center.x
+        followTheLineLabel.center.y = self.view.center.y - screenWidth * 0.2
+        
+        // Hides labels
+        
+        findTheCatLabel.isHidden = true
+        findTheKittenLabel.isHidden = true
+        followTheLineLabel.isHidden = true
+        
+    }
+    
     // 2. GAME LOGIC FUNCTIONS
     
     // catFoundHandler: if the user position is inside the cat image, catShown becomes true and the kitten is shown
@@ -307,6 +376,18 @@ class Level1: UIViewController {
         
         kitten.isHidden = false
         
+        // If the tutorial mode is activated hide the "Find the cat" label and show the "Find the kitten" label
+        
+        if Variables.tutorialModeActivated == true {
+            
+            findTheCatLabel.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0) + .milliseconds(500), execute: {
+                
+                self.findTheKittenLabel.isHidden = false
+                
+            })
+        }
+        
         // Set the variable: the cat has been found and shown
         
         catShown = true
@@ -331,6 +412,18 @@ class Level1: UIViewController {
         // Play kitten sound
         
         kittenSound.start()
+        
+        // If the tutorial mode is activated hide the "Find the kitten" label and show the "Connect the kitten to the cat" label
+        
+        if Variables.tutorialModeActivated == true {
+            
+            findTheKittenLabel.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0) + .milliseconds(500), execute: {
+                
+                self.followTheLineLabel.isHidden = false
+                
+            })
+        }
         
         // After 2 seconds
         
@@ -468,11 +561,7 @@ class Level1: UIViewController {
         // Tells the user level is completed
         
         UIAccessibility.post(notification: .announcement, argument: "Well done! Level 1 completed")
-        
-        // Plays cat sound
-        
-        playCatSound()
-        
+
         // After 2 seconds
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
@@ -498,6 +587,7 @@ class Level1: UIViewController {
         // Stops other oscillators
         
         oscillator.stop()
+        oscillator2.stop()
         
         // Plays kitten sound
         
@@ -513,6 +603,7 @@ class Level1: UIViewController {
         // Stops other oscillators
         
         oscillator.stop()
+        oscillator2.stop()
         
         // Plays kitten sound
         
@@ -542,9 +633,9 @@ class Level1: UIViewController {
         
         print("isBetweenCats")
         
-        let kittenMaxX = kitten.frame.minX
-        let catMinX = cat.frame.maxX
+        let kittenMaxX = kitten.frame.maxX
+        let catMaxX = cat.frame.maxX
         
-        return point.x >= kittenMaxX && point.x <= catMinX
+        return point.x >= kittenMaxX && point.x <= catMaxX
     }
 }

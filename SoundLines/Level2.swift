@@ -86,6 +86,22 @@ class Level2: UIViewController {
         
         let initialPoint = gestureRecognizer.location(in: view)
         
+        // Every time the user touches the cat image, cat sound is played
+        
+        if Utility.isInsideCat(cat: cat, point: initialPoint) {
+            
+            playCatSound()
+            
+        }
+        
+        // Every time the user touches the kitten image, kitten sound is played
+        
+        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
+            
+            playKittenSound()
+            
+        }
+        
         guard gestureRecognizer.view != nil else {return}
         
         // 1. The user finds elements: Find the cat - > Find the kitten -> Show the line -> Start game
