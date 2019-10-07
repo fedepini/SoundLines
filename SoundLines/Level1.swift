@@ -87,7 +87,6 @@ class Level1: UIViewController {
                     
                 })
             }
-            
         }
     }
     
@@ -116,10 +115,25 @@ class Level1: UIViewController {
         
         // Every time the user touches the kitten image, kitten sound is played
         
-        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
+        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) && kitten.isHidden == false {
             
             playKittenSound()
             
+        }
+        
+        // Every time the user is outside cat, kitten or line images the outside the line oscillator starts, to let a VI user know the interface is working
+        
+        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) == false && Utility.isInsideCat(cat: cat, point: initialPoint) == false && redLine.isHidden {
+            
+            startOutsideLineOscillator()
+            
+            // If the finger is not touching the screen stops the oscillator
+            
+            if gestureRecognizer.state == .ended {
+                
+                oscillator2.stop()
+                
+            }
         }
         
         guard gestureRecognizer.view != nil else {return}
@@ -358,9 +372,10 @@ class Level1: UIViewController {
         
         print("findTheCat")
         
-        // If it's the first time finding the cat, tell the user to find the kitten
+        // If it's the first time finding the cat tell the user to find the kitten
         
         if catFound == 0 {
+            
             UIAccessibility.post(notification: .announcement, argument: "You found the cat! Find the kitten")
         }
         
@@ -439,7 +454,7 @@ class Level1: UIViewController {
         })
     }
     
-    // startInsideTheLineOscillator: if cat, kitten and line have been shown and the finger is between the to cat images, start the first oscillator, whose frequency depends on distance from the middle line
+    // startInsideLineOscillator: if cat, kitten and line have been shown and the finger is between the to cat images, start the first oscillator, whose frequency depends on distance from the middle line
     
     func startInsideLineOscillator(point: CGPoint) -> Void {
         
@@ -448,6 +463,10 @@ class Level1: UIViewController {
         // Stops other oscillators playing
         
         oscillator2.stop()
+        
+        // Sets panner value for the oscillator: necessary for sound spatialization, which depends from finger horizontal position (sound "moves" accordingly from left to right and vice versa)
+        
+        panner.pan = Utility.normalizePannerValue(cat: cat, kitten: kitten, num: Double(point.x))
         
         // Sets up and starts the oscillator
         
@@ -473,6 +492,27 @@ class Level1: UIViewController {
         // Fixes the frequency for the oscillator
         
         oscillator.baseFrequency = 300
+    }
+    
+    // startOutsideLineOscillator: stops others oscillators and starts the outside line oscillator, whose frequency is fixed
+    
+    func startOutsideLineOscillator() -> Void {
+        
+        print("startOutsideLineOscillator")
+        
+        // Stops other oscillators
+        
+        oscillator.stop()
+        
+        // Sets panner value for the oscillator: necessary for sound spatialization
+        
+        panner.pan = 0.0
+        
+        // Sets up and starts the second oscillator
+        
+        oscillator2.amplitude = 0.5
+        oscillator2.frequency = 200
+        oscillator2.start()
     }
     
     // lastPointInsideCatHandler: if the user has moved from the kitten to the cat the oscillators are stopped and levelComplete becomes true
@@ -506,22 +546,13 @@ class Level1: UIViewController {
         UIAccessibility.post(notification: .announcement, argument: "Go back to the kitten and follow the line")
     }
     
-    // outsideLineHandler: if the finger position is outside the line, set up an oscillator with fixed and lower frequency
+    // outsideLineHandler: if the finger position is outside the line, starts the outside line oscillator and startedFromKitten becomes false
     
     func outsideLineHandler() -> Void {
         
         print("outsideLineHandler")
         
-        // Sets panner value for the oscillator: necessary for sound spatialization
-        
-        panner.pan = 0.0
-        
-        // Sets up and starts the second oscillator
-        
-        oscillator.stop()
-        oscillator2.amplitude = 0.5
-        oscillator2.frequency = 200
-        oscillator2.start()
+        startOutsideLineOscillator()
         
         // StartedFromKitten becomes false
         

@@ -66,13 +66,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0208940541445BEF88F6F412 /* Pods-SoundLinesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLinesUITests.debug.xcconfig"; path = "Target Support Files/Pods-SoundLinesUITests/Pods-SoundLinesUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		1AB725BE24617C4A4666A60F /* Pods-SoundLinesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLinesTests.debug.xcconfig"; path = "Target Support Files/Pods-SoundLinesTests/Pods-SoundLinesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2C342F524B7FD153D2FE077D /* Pods-SoundLines.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLines.release.xcconfig"; path = "Target Support Files/Pods-SoundLines/Pods-SoundLines.release.xcconfig"; sourceTree = "<group>"; };
+		3E703E8FEC6F4B226149F308 /* Pods-SoundLines.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLines.debug.xcconfig"; path = "Target Support Files/Pods-SoundLines/Pods-SoundLines.debug.xcconfig"; sourceTree = "<group>"; };
+		3EFE851736F16558E62C6F75 /* Pods-SoundLinesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLinesUITests.debug.xcconfig"; path = "Target Support Files/Pods-SoundLinesUITests/Pods-SoundLinesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		45035E98CC918056B168804D /* Pods_SoundLinesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoundLinesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D766EDD18F58440FFE3BBF0 /* Pods-SoundLines.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLines.debug.xcconfig"; path = "Target Support Files/Pods-SoundLines/Pods-SoundLines.debug.xcconfig"; sourceTree = "<group>"; };
+		4F2EC0D33F66B0015A27D3E1 /* Pods-SoundLinesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLinesUITests.release.xcconfig"; path = "Target Support Files/Pods-SoundLinesUITests/Pods-SoundLinesUITests.release.xcconfig"; sourceTree = "<group>"; };
+		59003122879B534731C09794 /* Pods-SoundLinesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLinesTests.debug.xcconfig"; path = "Target Support Files/Pods-SoundLinesTests/Pods-SoundLinesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		77DB3E33D53ACC5DF7DA94FB /* Pods_SoundLinesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoundLinesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		78EF8FCA71BE3AEE0F95E674 /* Pods-SoundLinesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLinesUITests.release.xcconfig"; path = "Target Support Files/Pods-SoundLinesUITests/Pods-SoundLinesUITests.release.xcconfig"; sourceTree = "<group>"; };
-		7E5BDEB2F640F13535C1C745 /* Pods-SoundLines.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLines.release.xcconfig"; path = "Target Support Files/Pods-SoundLines/Pods-SoundLines.release.xcconfig"; sourceTree = "<group>"; };
+		7874D5209110C8B06AA905DC /* Pods-SoundLinesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLinesTests.release.xcconfig"; path = "Target Support Files/Pods-SoundLinesTests/Pods-SoundLinesTests.release.xcconfig"; sourceTree = "<group>"; };
 		8B2CD563232FCE93007D5F22 /* kitten.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kitten.wav; sourceTree = "<group>"; };
 		8B2CF27C2327F343002BCFA6 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		8B2CF27E2327F3F7002BCFA6 /* SoundLinesTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SoundLinesTests; sourceTree = "<group>"; };
@@ -101,7 +102,6 @@
 		9EB4507822B28D8E00AA962B /* SoundLinesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundLinesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EC9A84622C225CF00ACC168 /* Level1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level1.swift; sourceTree = "<group>"; };
 		B9F62CCD71A579339C68DB2B /* Pods_SoundLines.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoundLines.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FADC1DB1B0421F620628A658 /* Pods-SoundLinesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundLinesTests.release.xcconfig"; path = "Target Support Files/Pods-SoundLinesTests/Pods-SoundLinesTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,19 +132,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2842C0E076B8522CA0E2FC1D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5D766EDD18F58440FFE3BBF0 /* Pods-SoundLines.debug.xcconfig */,
-				7E5BDEB2F640F13535C1C745 /* Pods-SoundLines.release.xcconfig */,
-				1AB725BE24617C4A4666A60F /* Pods-SoundLinesTests.debug.xcconfig */,
-				FADC1DB1B0421F620628A658 /* Pods-SoundLinesTests.release.xcconfig */,
-				0208940541445BEF88F6F412 /* Pods-SoundLinesUITests.debug.xcconfig */,
-				78EF8FCA71BE3AEE0F95E674 /* Pods-SoundLinesUITests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		4F49434A9F1A00665A51AFE7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,13 +142,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5BFD2948C70A6D67DE1344C9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3E703E8FEC6F4B226149F308 /* Pods-SoundLines.debug.xcconfig */,
+				2C342F524B7FD153D2FE077D /* Pods-SoundLines.release.xcconfig */,
+				59003122879B534731C09794 /* Pods-SoundLinesTests.debug.xcconfig */,
+				7874D5209110C8B06AA905DC /* Pods-SoundLinesTests.release.xcconfig */,
+				3EFE851736F16558E62C6F75 /* Pods-SoundLinesUITests.debug.xcconfig */,
+				4F2EC0D33F66B0015A27D3E1 /* Pods-SoundLinesUITests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		9EB4505022B28D8C00AA962B = {
 			isa = PBXGroup;
 			children = (
 				9EB4505B22B28D8C00AA962B /* SoundLines */,
 				9EB4505A22B28D8C00AA962B /* Products */,
-				2842C0E076B8522CA0E2FC1D /* Pods */,
 				4F49434A9F1A00665A51AFE7 /* Frameworks */,
+				5BFD2948C70A6D67DE1344C9 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -602,7 +603,7 @@
 		};
 		9EB4508222B28D8E00AA962B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D766EDD18F58440FFE3BBF0 /* Pods-SoundLines.debug.xcconfig */;
+			baseConfigurationReference = 3E703E8FEC6F4B226149F308 /* Pods-SoundLines.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -627,7 +628,7 @@
 		};
 		9EB4508322B28D8E00AA962B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E5BDEB2F640F13535C1C745 /* Pods-SoundLines.release.xcconfig */;
+			baseConfigurationReference = 2C342F524B7FD153D2FE077D /* Pods-SoundLines.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -652,7 +653,7 @@
 		};
 		9EB4508522B28D8E00AA962B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1AB725BE24617C4A4666A60F /* Pods-SoundLinesTests.debug.xcconfig */;
+			baseConfigurationReference = 59003122879B534731C09794 /* Pods-SoundLinesTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -673,7 +674,7 @@
 		};
 		9EB4508622B28D8E00AA962B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FADC1DB1B0421F620628A658 /* Pods-SoundLinesTests.release.xcconfig */;
+			baseConfigurationReference = 7874D5209110C8B06AA905DC /* Pods-SoundLinesTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -694,7 +695,7 @@
 		};
 		9EB4508822B28D8E00AA962B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0208940541445BEF88F6F412 /* Pods-SoundLinesUITests.debug.xcconfig */;
+			baseConfigurationReference = 3EFE851736F16558E62C6F75 /* Pods-SoundLinesUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -714,7 +715,7 @@
 		};
 		9EB4508922B28D8E00AA962B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 78EF8FCA71BE3AEE0F95E674 /* Pods-SoundLinesUITests.release.xcconfig */;
+			baseConfigurationReference = 4F2EC0D33F66B0015A27D3E1 /* Pods-SoundLinesUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

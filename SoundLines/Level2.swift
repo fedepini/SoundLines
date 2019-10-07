@@ -96,10 +96,25 @@ class Level2: UIViewController {
         
         // Every time the user touches the kitten image, kitten sound is played
         
-        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
+        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) && kitten.isHidden == false {
             
             playKittenSound()
             
+        }
+        
+        // Every time the user is outside cat, kitten or line images the outside the line oscillator starts, to let a VI user know the interface is working
+        
+        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) == false && Utility.isInsideCat(cat: cat, point: initialPoint) == false && redLine.isHidden {
+            
+            startOutsideLineOscillator()
+            
+            // If the finger is not touching the screen stops the oscillator
+            
+            if gestureRecognizer.state == .ended {
+                
+                oscillator2.stop()
+                
+            }
         }
         
         guard gestureRecognizer.view != nil else {return}
@@ -362,7 +377,7 @@ class Level2: UIViewController {
         })
     }
     
-    // startInsideTheLineOscillator: if cat, kitten and line have been shown and the finger is between the to cat images, start the first oscillator, whose frequency depends on distance from the middle line
+    // startInsideLineOscillator: if cat, kitten and line have been shown and the finger is between the to cat images, start the first oscillator, whose frequency depends on distance from the middle line
     
     func startInsideLineOscillator(point: CGPoint) -> Void {
         
@@ -396,6 +411,27 @@ class Level2: UIViewController {
         // Fixes the frequency for the oscillator
         
         oscillator.baseFrequency = 300
+    }
+    
+    // startOutsideLineOscillator: stops others oscillators and starts the outside line oscillator, whose frequency is fixed
+    
+    func startOutsideLineOscillator() -> Void {
+        
+        print("startOutsideLineOscillator")
+        
+        // Stops other oscillators
+        
+        oscillator.stop()
+        
+        // Sets panner value for the oscillator: necessary for sound spatialization
+        
+        panner.pan = 0.0
+        
+        // Sets up and starts the second oscillator
+        
+        oscillator2.amplitude = 0.5
+        oscillator2.frequency = 200
+        oscillator2.start()
     }
     
     // lastPointInsideCatHandler: if the user has moved from the kitten to the cat the oscillators are stopped and levelComplete becomes true
@@ -435,16 +471,7 @@ class Level2: UIViewController {
         
         print("outsideLineHandler")
         
-        // Sets panner value for the oscillator: necessary for sound spatialization
-        
-        panner.pan = 0.0
-        
-        // Sets up and starts the second oscillator
-        
-        oscillator.stop()
-        oscillator2.amplitude = 0.5
-        oscillator2.frequency = 200
-        oscillator2.start()
+        startOutsideLineOscillator()
         
         // StartedFromKitten becomes false
         
@@ -514,6 +541,7 @@ class Level2: UIViewController {
         // Stops other oscillators
         
         oscillator.stop()
+        oscillator2.stop()
         
         // Plays kitten sound
         
@@ -529,6 +557,7 @@ class Level2: UIViewController {
         // Stops other oscillators
         
         oscillator.stop()
+        oscillator2.stop()
         
         // Plays kitten sound
         

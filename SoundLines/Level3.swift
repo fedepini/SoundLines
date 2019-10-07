@@ -98,10 +98,25 @@ class Level3: UIViewController {
         
         // Every time the user touches the kitten image, kitten sound is played
         
-        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) {
+        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) && kitten.isHidden == false {
             
             playKittenSound()
             
+        }
+        
+        // Every time the user is outside cat, kitten or line images the outside the line oscillator starts, to let a VI user know the interface is working
+        
+        if Utility.isInsideKitten(kitten: kitten, point: initialPoint) == false && Utility.isInsideCat(cat: cat, point: initialPoint) == false && redLine.isHidden {
+            
+            startOutsideLineOscillator()
+            
+            // If the finger is not touching the screen stops the oscillator
+            
+            if gestureRecognizer.state == .ended {
+                
+                oscillator2.stop()
+                
+            }
         }
         
         guard gestureRecognizer.view != nil else {return}
@@ -424,6 +439,27 @@ class Level3: UIViewController {
         oscillator.baseFrequency = 300
     }
     
+    // startOutsideLineOscillator: stops others oscillators and starts the outside line oscillator, whose frequency is fixed
+    
+    func startOutsideLineOscillator() -> Void {
+        
+        print("startOutsideLineOscillator")
+        
+        // Stops other oscillators
+        
+        oscillator.stop()
+        
+        // Sets panner value for the oscillator: necessary for sound spatialization
+        
+        panner.pan = 0.0
+        
+        // Sets up and starts the second oscillator
+        
+        oscillator2.amplitude = 0.5
+        oscillator2.frequency = 200
+        oscillator2.start()
+    }
+    
     // lastPointInsideCatHandler: if the user has moved from the kitten to the cat the oscillators are stopped and levelComplete becomes true
     
     func lastPointInsideCatHandler() -> Void {
@@ -461,16 +497,7 @@ class Level3: UIViewController {
         
         print("outsideLineHandler")
         
-        // Sets panner value for the oscillator: necessary for sound spatialization
-        
-        panner.pan = 0.0
-        
-        // Sets up and starts the second oscillator
-        
-        oscillator.stop()
-        oscillator2.amplitude = 0.5
-        oscillator2.frequency = 200
-        oscillator2.start()
+        startOutsideLineOscillator()
         
         // StartedFromKitten becomes false
         
@@ -536,6 +563,7 @@ class Level3: UIViewController {
         // Stops other oscillators
         
         oscillator.stop()
+        oscillator2.stop()
         
         // Plays kitten sound
         
@@ -551,6 +579,7 @@ class Level3: UIViewController {
         // Stops other oscillators
         
         oscillator.stop()
+        oscillator2.stop()
         
         // Plays kitten sound
         
