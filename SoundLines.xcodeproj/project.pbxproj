@@ -13,11 +13,12 @@
 		8B2CF2802327F3F7002BCFA6 /* SoundLinesTests in Resources */ = {isa = PBXBuildFile; fileRef = 8B2CF27E2327F3F7002BCFA6 /* SoundLinesTests */; };
 		8B2CF2812327F3F7002BCFA6 /* SoundLinesUITests in Resources */ = {isa = PBXBuildFile; fileRef = 8B2CF27F2327F3F7002BCFA6 /* SoundLinesUITests */; };
 		8B2EC065234634D600BDDD59 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2EC064234634D600BDDD59 /* Variables.swift */; };
-		8B2EC06D23464E3800BDDD59 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2EC06C23464E3800BDDD59 /* SettingsScreen.swift */; };
 		8B53558C22DE035C00569401 /* Level2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B53558B22DE035C00569401 /* Level2.swift */; };
 		8B53558F22DE210600569401 /* cat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B53558D22DE210600569401 /* cat.wav */; };
+		8B73F0FA234E01110038CFBD /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73F0F9234E01110038CFBD /* Line.swift */; };
 		8B7CA3A22327F78000370A25 /* cat-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7CA3A12327F78000370A25 /* cat-icon.png */; };
 		8B7CA3A42327F78D00370A25 /* soundlines-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7CA3A32327F78D00370A25 /* soundlines-logo.png */; };
+		8B96DA94234DE6C300FB53C3 /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96DA93234DE6C300FB53C3 /* Cat.swift */; };
 		8BAEE569232653AB00BC8326 /* kitten-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BAEE567232653AA00BC8326 /* kitten-icon.png */; };
 		8BBCAB0723147CFC00115E6E /* FinalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBCAB0623147CFC00115E6E /* FinalScreen.swift */; };
 		8BC2291F231456F70021593E /* OldSansBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BC2291E231456F70021593E /* OldSansBlack.ttf */; };
@@ -79,11 +80,12 @@
 		8B2CF27E2327F3F7002BCFA6 /* SoundLinesTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SoundLinesTests; sourceTree = "<group>"; };
 		8B2CF27F2327F3F7002BCFA6 /* SoundLinesUITests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SoundLinesUITests; sourceTree = "<group>"; };
 		8B2EC064234634D600BDDD59 /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
-		8B2EC06C23464E3800BDDD59 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		8B53558B22DE035C00569401 /* Level2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level2.swift; sourceTree = "<group>"; };
 		8B53558D22DE210600569401 /* cat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cat.wav; sourceTree = "<group>"; };
+		8B73F0F9234E01110038CFBD /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		8B7CA3A12327F78000370A25 /* cat-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cat-icon.png"; path = "../../../Desktop/Progetto/cat-icon.png"; sourceTree = "<group>"; };
 		8B7CA3A32327F78D00370A25 /* soundlines-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "soundlines-logo.png"; path = "../../../Desktop/Progetto/soundlines-logo.png"; sourceTree = "<group>"; };
+		8B96DA93234DE6C300FB53C3 /* Cat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cat.swift; sourceTree = "<group>"; };
 		8BAEE567232653AA00BC8326 /* kitten-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kitten-icon.png"; sourceTree = "<group>"; };
 		8BBCAB0623147CFC00115E6E /* FinalScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalScreen.swift; sourceTree = "<group>"; };
 		8BC2291E231456F70021593E /* OldSansBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = OldSansBlack.ttf; sourceTree = "<group>"; };
@@ -152,7 +154,6 @@
 				3EFE851736F16558E62C6F75 /* Pods-SoundLinesUITests.debug.xcconfig */,
 				4F2EC0D33F66B0015A27D3E1 /* Pods-SoundLinesUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -179,9 +180,10 @@
 		9EB4505B22B28D8C00AA962B /* SoundLines */ = {
 			isa = PBXGroup;
 			children = (
+				8B96DA93234DE6C300FB53C3 /* Cat.swift */,
+				8B73F0F9234E01110038CFBD /* Line.swift */,
 				9EB4505C22B28D8C00AA962B /* AppDelegate.swift */,
 				8BCE1CC72327B341003928C5 /* OpenScreen.swift */,
-				8B2EC06C23464E3800BDDD59 /* SettingsScreen.swift */,
 				8BEDB45822CE578D00BEDAEC /* Level1Screen.swift */,
 				9EB4505E22B28D8C00AA962B /* Level2Screen.swift */,
 				8BCFC82422E4AABA00A668A8 /* Level3Screen.swift */,
@@ -423,11 +425,12 @@
 				8BCFC82522E4AABA00A668A8 /* Level3Screen.swift in Sources */,
 				8B2CF27D2327F343002BCFA6 /* Utility.swift in Sources */,
 				9EC9A84722C225CF00ACC168 /* Level1.swift in Sources */,
-				8B2EC06D23464E3800BDDD59 /* SettingsScreen.swift in Sources */,
 				9EB4505F22B28D8C00AA962B /* Level2Screen.swift in Sources */,
 				9EB4505D22B28D8C00AA962B /* AppDelegate.swift in Sources */,
 				8B53558C22DE035C00569401 /* Level2.swift in Sources */,
+				8B73F0FA234E01110038CFBD /* Line.swift in Sources */,
 				8B2EC065234634D600BDDD59 /* Variables.swift in Sources */,
+				8B96DA94234DE6C300FB53C3 /* Cat.swift in Sources */,
 				8BCE1CC82327B341003928C5 /* OpenScreen.swift in Sources */,
 				8BBCAB0723147CFC00115E6E /* FinalScreen.swift in Sources */,
 				8BEDB45922CE578D00BEDAEC /* Level1Screen.swift in Sources */,
